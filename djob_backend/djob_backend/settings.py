@@ -26,6 +26,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+USER_CREATE_PASSWORD_RETYPE = False  # need to disable it to use djoser
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -35,11 +37,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',  # django rest framework
+    'rest_framework.authtoken',  # token authentication
+    'djoser',  # user registration
+    'corsheaders',  # cross-origin resource sharing
+    'job',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]  # Allow CORS for localhost:3000
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # corsheaders middleware
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
