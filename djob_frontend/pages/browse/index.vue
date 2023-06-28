@@ -1,10 +1,10 @@
 <template>
   <div class="grid md:grid-cols-4 gap-3 py-10 px-6">
     <div class="md:col-span-1 p-6 bg-teal-700 rounded-xl">  <!-- col-span full when in small screen -->
+      <!-- w-full to fill the whole space in parent -->
       <div class="flex space-x-4">
-        <input type="search" placeholder="Find a job..." class="w-full px-6 py-4 rounded-xl">
-        <!-- w-full to fill the whole space in parent -->
-        <button class="px-6 py-4 bg-teal-900 text-white rounded-xl">
+        <input v-model="query" type="search" placeholder="Find a job..." class="w-full px-6 py-4 rounded-xl">
+        <button @click="performSearch" class="px-6 py-4 bg-teal-900 text-white rounded-xl">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -39,13 +39,21 @@
 </template>
 <script setup>
 
+let query = ''
+let queryRef = ref('')
 let {data: jobCategories} = await useFetch('http://localhost:8000/api/v1/jobs/categories')
 let selectedCategories = ref([])
 let {data: jobs} = await useFetch('http://localhost:8000/api/v1/jobs/', {
   query: {
+    query: queryRef,
     categories: selectedCategories
   }
 })
+
+function performSearch() {
+  queryRef.value = query
+  console.log('searching for', query)
+}
 
 function toggleCategory(id) {
   const index = selectedCategories.value.indexOf(id)
