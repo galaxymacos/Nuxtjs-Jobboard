@@ -20,7 +20,7 @@
           </nuxt-link>
           <nuxt-link to="/createjob" class="py-4 px-6 bg-teal-900 hover:bg-teal-700 text-white rounded-xl">Create job
           </nuxt-link>
-          <nuxt-link to="/logout" class="py-4 px-6 bg-rose-600 hover:bg-teal-700 text-white rounded-xl">Log out
+          <nuxt-link to="#" class="py-4 px-6 bg-rose-600 hover:bg-teal-700 text-white rounded-xl">Log out
           </nuxt-link>
         </template>
 

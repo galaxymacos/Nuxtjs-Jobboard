@@ -10,13 +10,13 @@
       <h2 class="mb-8 text-2xl text-center">Newest jobs</h2>
 
       <div class="space-y-4">
-        <job/>
-        <job/>
-        <job/>
+        <Job v-for="job in jobs" :key="job.id" :job="job"/>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import Job from "~/components/job.vue";
+
+const {data: jobs} = await useFetch('http://localhost:8000/api/v1/jobs/newest')
 </script>

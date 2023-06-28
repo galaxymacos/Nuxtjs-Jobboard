@@ -18,21 +18,41 @@
       <h3 class="mt-6 text-xl text-white">Categories</h3>
 
       <div class="mt-6 space-y-4">
-        <p class="py-4 px-6 text-white rounded-xl">Category 1</p>
-        <p class="py-4 px-6 text-white rounded-xl">Category 2</p>
-        <p class="py-4 px-6 text-white rounded-xl">Category 3</p>
+        <p
+            v-for="category in jobCategories"
+            :key="category.id"
+            @click="toggleCategory(category.id)"
+            :class="{'bg-teal-900': selectedCategories.includes(category.id)}"
+            class="py-4 px-6 text-white rounded-xl">
+          {{ category.title }}
+        </p>
       </div>
+      {{ selectedCategories }}
     </div>
 
     <div class="md:col-span-3">
       <div class="space-y-4">
-        <job/>
-        <job/>
-        <job/>
+        <job v-for="job in jobs" :key="job.id" :job="job"/>
       </div>
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import Job from "~/components/job.vue";
+<script setup>
+
+let {data: jobCategories} = await useFetch('http://localhost:8000/api/v1/jobs/categories')
+let selectedCategories = ref([])
+let {data: jobs} = await useFetch('http://localhost:8000/api/v1/jobs/', {
+  query: {
+    categories: selectedCategories
+  }
+})
+
+function toggleCategory(id) {
+  const index = selectedCategories.value.indexOf(id)
+  if (index === -1) {
+    selectedCategories.value.push(id)
+  } else {
+    selectedCategories.value.splice(index, 1)
+  }
+}
 </script>

@@ -9,6 +9,9 @@ class Category(models.Model):
     class Meta:
         ordering = ('title',)  # sort by title
 
+    def __str__(self):
+        return self.title
+
 
 class Job(models.Model):
     category = models.ForeignKey(Category, related_name='jobs', on_delete=models.CASCADE)
@@ -27,3 +30,6 @@ class Job(models.Model):
 
     def created_at_formatted(self):
         return defaultfilters.date(self.created_at, "M d, Y")
+
+    def __str__(self):
+        return self.title
